@@ -1,0 +1,12 @@
+ds = "household_power_consumption.txt";
+data <-read.table(ds, header = TRUE, sep = ";", dec = ".", colClasses = c("character","character","character","character","character","character","character","character","character"));
+data$Date <- as.Date(data$Date,"%d/%m/%Y");
+subdata <- subset(data, Date== "2007-02-01" | Date=="2007-02-02");
+Global_active_power <- as.numeric(subdata$Global_active_power);
+dev.new(width=480, height=480);
+plot(Global_active_power, type="n", main="", xlab = "", ylab = "Global Active Power (Kilowatts)",xaxt="n");#,yaxt = "n",xaxt="n");
+#axis(2, at=c(0,1000,2000,3000), labels = c(0,2,4,6));
+axis(1, at=c(0,length(Global_active_power)/2,length(Global_active_power)), labels = c("Thu","Fri","Sat"));
+lines(Global_active_power);
+dev.copy(png, file = "plot2.png");
+dev.off();
